@@ -1,9 +1,13 @@
 import boto3
 import json
+import os
 from datetime import datetime
 
 ec2 = boto3.client("ec2")
 iam = boto3.client("iam")
+s3 = boto3.client("s3")
+
+BUCKET = os.environ["INVENTORY_BUCKET"]
 
 def lambda_handler(event, context):
     timestamp = datetime.utcnow().isoformat()
@@ -26,7 +30,20 @@ def lambda_handler(event, context):
         "iam_users": len(users["Users"]),
     }
 
-    print("Cloud Resource Inventory Summary")
-    print(json.dumps(summary, indent=2))
+    key = f"inventory/{timestamp}.json"
 
-    return summary
+    s3.put_object(
+        Bucket=BUCKET,
+        Key=key,
+        Body=json.dumps(summary, indent=2),
+        ContentType="application/json"
+    )
+
+    print("Inventory written to S3:", key)
+
+    return {
+        "status": "success",
+        "s3_key": key,
+        "summary": summary
+    }
+
