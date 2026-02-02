@@ -145,5 +145,3 @@ It focuses on **operability and reliability**, not application features.
 This project is deliberately scoped to demonstrate core **CloudOps and Platform Engineering** skills without over-engineering. Future extensions are possible but not required.
 
 ---
-
-🔗 **LinkedIn-ready | Recruiter-friendly | Interview-safe**
