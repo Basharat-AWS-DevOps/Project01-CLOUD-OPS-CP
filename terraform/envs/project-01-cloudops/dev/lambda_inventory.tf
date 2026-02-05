@@ -6,7 +6,7 @@ resource "aws_lambda_function" "inventory" {
   timeout       = 300
 
   filename         = "../../../lambdas/inventory_collector.zip"
-  source_code_hash = filebase64sha256("../../../lambdas/inventory_collector.zip")
+source_code_hash = filebase64sha256("../../../../lambdas/inventory_collector.zip")
 
   environment {
     variables = {
